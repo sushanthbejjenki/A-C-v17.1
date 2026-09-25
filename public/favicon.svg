@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="100%" height="100%">
+  <defs>
+    <linearGradient id="favBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="favYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="favRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(-10, 15)">
+    <!-- Letter 'A' Top-Right Segment (Yellow / Amber) -->
+    <polygon points="106,18 146,104 108,104 84,52" fill="url(#favYellow)"/>
+
+    <!-- Letter 'A' Left Leg & Crossbar (Cyan / Azure Blue) -->
+    <path d="M 106,18 L 22,180 L 62,180 L 80,140 L 126,140 L 132,154 L 104,154 L 92,180 L 152,180 L 144,154 L 134,128 L 106,72 Z" fill="url(#favBlue)"/>
+
+    <!-- Letter 'C' Bottom Arc (Yellow / Amber) -->
+    <path d="M 124,102 C 124,140 154,174 196,174 C 234,174 262,152 274,122 L 238,108 C 232,125 215,138 196,138 C 174,138 158,122 158,102 Z" fill="url(#favYellow)"/>
+
+    <!-- Letter 'C' Upper Arc (Cardinal Red) -->
+    <path d="M 274,78 C 262,48 234,26 196,26 C 154,26 124,60 124,102 L 158,102 C 158,80 174,62 196,62 C 215,62 232,77 238,94 Z" fill="url(#favRed)"/>
+
+    <!-- Red Ampersand '&' centered inside 'C' -->
+    <text x="197" y="119" font-family="'Montserrat', 'Inter', -apple-system, sans-serif" font-weight="900" font-size="52" fill="#dc2626" text-anchor="middle">&amp;</text>
+  </g>
+
+  <!-- Red 4-Point Star Accent on Top Right -->
+  <path d="M 235,16 Q 235,28 247,28 Q 235,28 235,40 Q 235,28 223,28 Q 235,28 235,16 Z" fill="url(#favRed)"/>
+</svg>

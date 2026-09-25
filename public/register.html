@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="preload" as="image" href="/logo.webp" type="image/webp">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | A&C Solutions Pvt. Ltd.</title>
+  <link rel="stylesheet" href="/auth.css?v=8">
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+</head>
+<body>
+  <main class="box">
+    <div class="logo-wrap">
+      <a href="/"><img src="/logo.webp" alt="A&C Solutions Pvt. Ltd. Logo" class="logo" width="1200" height="632" decoding="async"></a>
+    </div>
+
+    <span class="eyebrow">USER REGISTRATION</span>
+    <h1>Join A&C Solutions</h1>
+    <p class="sub">Create your account to access the client portal.</p>
+
+    <form id="form">
+      <label for="fullName">
+        Full Name
+        <input id="fullName" type="text" required placeholder="e.g. John Doe">
+      </label>
+
+      <label for="email">
+        Work / Personal Email
+        <input id="email" type="email" required placeholder="name@company.com">
+      </label>
+
+      <label for="username">
+        Username
+        <input id="username" type="text" minlength="3" maxlength="30" required placeholder="3–30 characters (letters, numbers, dot, dash)">
+      </label>
+
+      <label for="password">
+        Password
+        <input id="password" type="password" minlength="8" required placeholder="Minimum 8 characters">
+      </label>
+
+      <label for="confirmPassword">
+        Confirm Password
+        <input id="confirmPassword" type="password" minlength="8" required placeholder="Re-enter your password">
+      </label>
+
+      <button id="btn" type="submit">Create Account →</button>
+      <div id="msg"></div>
+    </form>
+
+    <p class="switch">Already registered? <a href="/login.html">Sign in here</a></p>
+    <a class="back" href="/">← Back to Company Website</a>
+  </main>
+
+  <script>
+    const f = document.getElementById('form');
+    const b = document.getElementById('btn');
+    const m = document.getElementById('msg');
+    const fullNameInput = document.getElementById('fullName');
+    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      m.textContent = '';
+      m.className = '';
+      b.disabled = true;
+      b.textContent = 'Creating account…';
+
+      const body = {
+        fullName: fullNameInput.value.trim(),
+        email: emailInput.value.trim(),
+        username: usernameInput.value.trim(),
+        password: passwordInput.value,
+        confirmPassword: confirmPasswordInput.value
+      };
+
+      try {
+        const r = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.message || d.error || 'Registration failed.');
+
+        m.className = 'success';
+        m.textContent = d.message || 'Account created! Redirecting to login…';
+        f.reset();
+        setTimeout(() => location.href = '/login.html', 1200);
+      } catch (x) {
+        m.className = 'error';
+        m.textContent = x.message;
+      } finally {
+        b.disabled = false;
+        b.textContent = 'Create Account →';
+      }
+    });
+  </script>
+</body>
+</html>

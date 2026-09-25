@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | A&C Solutions Pvt. Ltd.</title>
+  <link rel="stylesheet" href="/admin.css">
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+</head>
+<body>
+  <header>
+    <a class="brand-link" href="/"><img src="/logo.webp" alt="A&C Solutions Pvt. Ltd. Logo" width="1200" height="632" decoding="async"></a>
+    <div class="header-right">
+      <a class="header-link" href="/">Company Website</a>
+      <a class="header-link" href="/portal">User Portal</a><a class="header-link" href="/admin-workspace">People & Operations</a>
+      <button id="logout" class="btn-outline">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="top">
+      <div>
+        <span>SYSTEM ADMINISTRATION</span>
+        <h1>Corporate Control Center</h1>
+        <p>Monitor real-time applications, service enquiries, registered users, and security logs.</p>
+      </div>
+      <div>
+        <button id="refreshBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          Refresh All
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Statistics Strip -->
+    <section class="stats">
+      <div class="stat-card">
+        <b id="statUsers">0</b>
+        <small>Registered Accounts</small>
+      </div>
+      <div class="stat-card">
+        <b id="statApps" style="color:var(--primary);">0</b>
+        <small>Internship Applications</small>
+      </div>
+      <div class="stat-card">
+        <b id="statContacts">0</b>
+        <small>Contact Messages</small>
+      </div>
+      <div class="stat-card">
+        <b id="statEnquiries">0</b>
+        <small>Service Enquiries</small>
+      </div>
+      <div class="stat-card">
+        <b id="statSuccess" style="color:#059669;">0</b>
+        <small>Successful Logins</small>
+      </div>
+      <div class="stat-card">
+        <b id="statFailed" style="color:#dc2626;">0</b>
+        <small>Failed Login Attempts</small>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="admin-nav-tabs">
+      <button class="admin-tab active" data-tab="internships">Internship Applications</button>
+      <button class="admin-tab" data-tab="contacts">Contact Messages</button>
+      <button class="admin-tab" data-tab="enquiries">Domain Enquiries</button>
+      <button class="admin-tab" data-tab="users">Registered Users</button>
+      <button class="admin-tab" data-tab="logins">Security Audit Logs</button>
+    </div>
+
+    <!-- 1. INTERNSHIP APPLICATIONS TAB -->
+    <section id="tab-internships" class="panel tab-content">
+      <div class="panel-header">
+        <div>
+          <h2>Internship & IT Applications</h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Review student and talent applications across technology and company domains.</p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="appSearch" class="search-input" placeholder="Search applicant, email, college...">
+          <select id="appDomainFilter" class="filter-select">
+            <option value="">All Domains</option>
+            <option value="IT & Technology">IT & Technology</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Content Creation">Content Creation</option>
+            <option value="Content Moderation">Content Moderation</option>
+            <option value="Real Estate Promotions">Real Estate Promotions</option>
+            <option value="CCTV Monitoring">CCTV Monitoring</option>
+          </select>
+          <select id="appStatusFilter" class="filter-select">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Reviewing">Reviewing</option>
+            <option value="Shortlisted">Shortlisted</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Applicant Name</th>
+              <th>Contact Details</th>
+              <th>College & Degree</th>
+              <th>Domain</th>
+              <th>Status</th>
+              <th>Applied Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="appTableBody">
+            <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">Loading applications...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. CONTACT MESSAGES TAB -->
+    <section id="tab-contacts" class="panel tab-content" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <h2>Website Contact Submissions</h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Enquiries received through the general corporate contact form.</p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="contactSearch" class="search-input" placeholder="Search name, email, subject...">
+          <select id="contactStatusFilter" class="filter-select">
+            <option value="">All Statuses</option>
+            <option value="New">New</option>
+            <option value="Read">Read</option>
+            <option value="Responded">Responded</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sender Name</th>
+              <th>Contact Info</th>
+              <th>Subject</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contactTableBody">
+            <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">Loading contact enquiries...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. DOMAIN SERVICE ENQUIRIES TAB -->
+    <section id="tab-enquiries" class="panel tab-content" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <h2>Multi-Domain Service Inquiries</h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Inquiries for CCTV monitoring, real estate promotions, marketing, and content services.</p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="enquirySearch" class="search-input" placeholder="Search client, email...">
+          <select id="enquiryDomainFilter" class="filter-select">
+            <option value="">All Domains</option>
+            <option value="CCTV Monitoring">CCTV Monitoring</option>
+            <option value="Real Estate Promotions">Real Estate Promotions</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Content Creation">Content Creation</option>
+            <option value="Content Moderation">Content Moderation</option>
+            <option value="IT & Technology Solutions">IT & Technology Solutions</option>
+          </select>
+          <select id="enquiryStatusFilter" class="filter-select">
+            <option value="">All Statuses</option>
+            <option value="New">New</option>
+            <option value="Read">Read</option>
+            <option value="Responded">Responded</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Client Name</th>
+              <th>Contact Info</th>
+              <th>Domain</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="enquiryTableBody">
+            <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">Loading domain enquiries...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. USER MANAGEMENT TAB -->
+    <section id="tab-users" class="panel tab-content" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <h2>Registered User Accounts</h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Manage user accounts, roles, and activation status.</p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="userSearch" class="search-input" placeholder="Search name, username, email...">
+          <select id="userRoleFilter" class="filter-select">
+            <option value="">All Roles</option>
+            <option value="user">User</option>
+            <option value="admin">Administrator</option>
+          </select>
+          <select id="userActiveFilter" class="filter-select">
+            <option value="">All States</option>
+            <option value="true">Active Only</option>
+            <option value="false">Deactivated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Account State</th>
+              <th>Member Since</th>
+              <th>Last Login</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">Loading accounts...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. SECURITY & LOGIN LOGS TAB -->
+    <section id="tab-logins" class="panel tab-content" style="display:none;">
+      <div class="panel-header">
+        <div>
+          <h2>Authentication & Security Audit Trail</h2>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Real-time log of all login attempts with IP addresses and user agents.</p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="logSearch" class="search-input" placeholder="Search username, IP, role...">
+          <select id="logStatusFilter" class="filter-select">
+            <option value="">All Attempts</option>
+            <option value="true">Success Only</option>
+            <option value="false">Failed Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Username / Email</th>
+              <th>Login Status</th>
+              <th>Assigned Role</th>
+              <th>IP Address</th>
+              <th>Device / Browser Agent</th>
+            </tr>
+          </thead>
+          <tbody id="logTableBody">
+            <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">Loading security logs...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Detail & Action Modal -->
+  <div id="detailModal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Record Details</h3>
+        <button type="button" class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // State Store
+    let allApps = [];
+    let allContacts = [];
+    let allEnquiries = [];
+    let allUsers = [];
+    let allLogs = [];
+
+    // Tab Switching
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        tab.classList.add('active');
+        const target = document.getElementById('tab-' + tab.dataset.tab);
+        if (target) target.style.display = 'block';
+      });
+    });
+
+    // Initial Data Fetch
+    async function loadAllData() {
+      try {
+        const [statsRes, appsRes, contactsRes, enquiriesRes, usersRes, logsRes] = await Promise.all([
+          fetch('/api/admin/dashboard', { credentials: 'same-origin' }),
+          fetch('/api/admin/internships', { credentials: 'same-origin' }),
+          fetch('/api/admin/contacts', { credentials: 'same-origin' }),
+          fetch('/api/admin/enquiries', { credentials: 'same-origin' }),
+          fetch('/api/admin/users', { credentials: 'same-origin' }),
+          fetch('/api/admin/logins', { credentials: 'same-origin' })
+        ]);
+
+        if (statsRes.status === 401 || statsRes.status === 403) {
+          location.href = '/login.html';
+          return;
+        }
+
+        const statsData = await statsRes.json();
+        const appsData = await appsRes.json();
+        const contactsData = await contactsRes.json();
+        const enquiriesData = await enquiriesRes.json();
+        const usersData = await usersRes.json();
+        const logsData = await logsRes.json();
+
+        // Update Statistics Counters
+        if (statsData.success && statsData.stats) {
+          const s = statsData.stats;
+          document.getElementById('statUsers').textContent = s.totalUsers || 0;
+          document.getElementById('statApps').textContent = s.totalApplications || 0;
+          document.getElementById('statContacts').textContent = s.totalContactEnquiries || 0;
+          document.getElementById('statEnquiries').textContent = s.totalServiceEnquiries || 0;
+          document.getElementById('statSuccess').textContent = s.successfulLogins || 0;
+          document.getElementById('statFailed').textContent = s.failedLogins || 0;
+        }
+
+        allApps = appsData.applications || [];
+        allContacts = contactsData.contacts || [];
+        allEnquiries = enquiriesData.enquiries || [];
+        allUsers = usersData.users || [];
+        allLogs = logsData.logs || [];
+
+        renderApps();
+        renderContacts();
+        renderEnquiries();
+        renderUsers();
+        renderLogs();
+      } catch (err) {
+        console.error('Failed to load admin data:', err);
+      }
+    }
+
+    // 1. Render Applications
+    function renderApps() {
+      const q = (document.getElementById('appSearch').value || '').toLowerCase().trim();
+      const domain = document.getElementById('appDomainFilter').value;
+      const status = document.getElementById('appStatusFilter').value;
+
+      const filtered = allApps.filter(a => {
+        const matchesQ = !q || (a.fullName && a.fullName.toLowerCase().includes(q)) || (a.email && a.email.toLowerCase().includes(q)) || (a.college && a.college.toLowerCase().includes(q));
+        const matchesDomain = !domain || a.domain === domain;
+        const matchesStatus = !status || a.status === status;
+        return matchesQ && matchesDomain && matchesStatus;
+      });
+
+      const tbody = document.getElementById('appTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted);">No internship applications match criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => `
+        <tr>
+          <td><strong>${esc(a.fullName)}</strong></td>
+          <td>
+            <div style="font-size:13px;">${esc(a.email)}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${esc(a.phone)}</div>
+          </td>
+          <td>
+            <div>${esc(a.college)}</div>
+            <div style="font-size:11.5px;color:var(--text-muted);">${esc(a.branch || '—')} (${esc(a.yearOfStudy || '—')})</div>
+          </td>
+          <td><span style="font-size:12.5px;font-weight:600;">${esc(a.domain)}</span></td>
+          <td><span class="badge ${badgeClassForStatus(a.status)}">${esc(a.status)}</span></td>
+          <td>${new Date(a.createdAt).toLocaleDateString()}</td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-sm" data-admin-action="view-app" data-id="${a._id}">Review</button>
+              <button type="button" class="btn-sm btn-danger" data-admin-action="delete-app" data-id="${a._id}">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 2. Render Contacts
+    function renderContacts() {
+      const q = (document.getElementById('contactSearch').value || '').toLowerCase().trim();
+      const status = document.getElementById('contactStatusFilter').value;
+
+      const filtered = allContacts.filter(c => {
+        const matchesQ = !q || (c.name && c.name.toLowerCase().includes(q)) || (c.email && c.email.toLowerCase().includes(q)) || (c.subject && c.subject.toLowerCase().includes(q));
+        const matchesStatus = !status || c.status === status;
+        return matchesQ && matchesStatus;
+      });
+
+      const tbody = document.getElementById('contactTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No contact messages match criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(c => `
+        <tr>
+          <td><strong>${esc(c.name)}</strong></td>
+          <td>
+            <div>${esc(c.email)}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${esc(c.phone || '—')}</div>
+          </td>
+          <td>${esc(c.subject || 'General Enquiry')}</td>
+          <td><span class="badge ${badgeClassForStatus(c.status)}">${esc(c.status)}</span></td>
+          <td>${new Date(c.createdAt).toLocaleDateString()}</td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-sm" data-admin-action="view-contact" data-id="${c._id}">View</button>
+              <button type="button" class="btn-sm btn-danger" data-admin-action="delete-contact" data-id="${c._id}">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 3. Render Enquiries
+    function renderEnquiries() {
+      const q = (document.getElementById('enquirySearch').value || '').toLowerCase().trim();
+      const domain = document.getElementById('enquiryDomainFilter').value;
+      const status = document.getElementById('enquiryStatusFilter').value;
+
+      const filtered = allEnquiries.filter(e => {
+        const matchesQ = !q || (e.name && e.name.toLowerCase().includes(q)) || (e.email && e.email.toLowerCase().includes(q));
+        const matchesDomain = !domain || e.domain === domain;
+        const matchesStatus = !status || e.status === status;
+        return matchesQ && matchesDomain && matchesStatus;
+      });
+
+      const tbody = document.getElementById('enquiryTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No domain enquiries match criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(e => `
+        <tr>
+          <td><strong>${esc(e.name)}</strong></td>
+          <td>
+            <div>${esc(e.email)}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${esc(e.phone || '—')}</div>
+          </td>
+          <td><strong>${esc(e.domain)}</strong></td>
+          <td><span class="badge ${badgeClassForStatus(e.status)}">${esc(e.status)}</span></td>
+          <td>${new Date(e.createdAt).toLocaleDateString()}</td>
+          <td>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-sm" data-admin-action="view-enquiry" data-id="${e._id}">View</button>
+              <button type="button" class="btn-sm btn-danger" data-admin-action="delete-enquiry" data-id="${e._id}">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 4. Render Users
+    function renderUsers() {
+      const q = (document.getElementById('userSearch').value || '').toLowerCase().trim();
+      const role = document.getElementById('userRoleFilter').value;
+      const active = document.getElementById('userActiveFilter').value;
+
+      const filtered = allUsers.filter(u => {
+        const matchesQ = !q || (u.name && u.name.toLowerCase().includes(q)) || (u.username && u.username.toLowerCase().includes(q)) || (u.email && u.email.toLowerCase().includes(q));
+        const matchesRole = !role || u.role === role;
+        const matchesActive = !active || String(u.isActive) === active;
+        return matchesQ && matchesRole && matchesActive;
+      });
+
+      const tbody = document.getElementById('userTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">No registered users found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(u => `
+        <tr>
+          <td><strong>${esc(u.name || u.fullName || u.username)}</strong></td>
+          <td><code>@${esc(u.username)}</code></td>
+          <td>${esc(u.email || '—')}</td>
+          <td><span class="badge ${u.role === 'admin' ? 'ok' : ''}">${esc(u.role)}</span></td>
+          <td>
+            <span class="badge ${u.isActive ? 'ok' : 'bad'}">
+              ${u.isActive ? 'Active' : 'Deactivated'}
+            </span>
+          </td>
+          <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</td>
+          <td>${u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'Never'}</td>
+          <td>
+            <button type="button" class="btn-sm ${u.isActive ? 'btn-danger' : 'btn-success'}" onclick="toggleUserActive('${u._id}', ${!u.isActive})">
+              ${u.isActive ? 'Deactivate' : 'Activate'}
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 5. Render Security Logs
+    function renderLogs() {
+      const q = (document.getElementById('logSearch').value || '').toLowerCase().trim();
+      const success = document.getElementById('logStatusFilter').value;
+
+      const filtered = allLogs.filter(l => {
+        const matchesQ = !q || (l.username && l.username.toLowerCase().includes(q)) || (l.ip && l.ip.toLowerCase().includes(q)) || (l.role && l.role.toLowerCase().includes(q));
+        const matchesStatus = !success || String(l.success) === success;
+        return matchesQ && matchesStatus;
+      });
+
+      const tbody = document.getElementById('logTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">No security logs found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(l => `
+        <tr>
+          <td>${new Date(l.timestamp).toLocaleString()}</td>
+          <td><strong>${esc(l.username || l.email || '—')}</strong></td>
+          <td>
+            <span class="badge ${l.success ? 'ok' : 'bad'}">
+              ${l.success ? '● SUCCESS' : '✕ FAILED'}
+            </span>
+          </td>
+          <td>${esc(l.role || '—')}</td>
+          <td><code style="font-size:12px;background:#edf2f7;padding:3px 6px;border-radius:4px;">${esc(l.ip || '—')}</code></td>
+          <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--text-muted);" title="${esc(l.userAgent)}">${esc(l.userAgent || '—')}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Utility Status Class
+    function badgeClassForStatus(st) {
+      if (!st) return '';
+      const s = st.toLowerCase();
+      if (s === 'pending' || s === 'new') return 'pending';
+      if (s === 'reviewing' || s === 'read') return 'reviewing';
+      if (s === 'shortlisted' || s === 'responded') return 'shortlisted';
+      if (s === 'accepted') return 'accepted';
+      if (s === 'rejected') return 'rejected';
+      if (s === 'closed') return 'closed';
+      return '';
+    }
+
+    function esc(str) {
+      return String(str || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    // Search and Filter Listeners
+    ['appSearch', 'appDomainFilter', 'appStatusFilter'].forEach(id => document.getElementById(id).addEventListener('input', renderApps));
+    ['contactSearch', 'contactStatusFilter'].forEach(id => document.getElementById(id).addEventListener('input', renderContacts));
+    ['enquirySearch', 'enquiryDomainFilter', 'enquiryStatusFilter'].forEach(id => document.getElementById(id).addEventListener('input', renderEnquiries));
+    ['userSearch', 'userRoleFilter', 'userActiveFilter'].forEach(id => document.getElementById(id).addEventListener('input', renderUsers));
+    ['logSearch', 'logStatusFilter'].forEach(id => document.getElementById(id).addEventListener('input', renderLogs));
+
+    // Modal Display Functions
+    const modal = document.getElementById('detailModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    document.getElementById('modalCloseBtn').onclick = () => modal.style.display = 'none';
+
+    window.onclick = (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    };
+
+    // Modal: Application Review
+    window.viewAppModal = function(id) {
+      const a = allApps.find(x => x._id === id);
+      if (!a) return;
+
+      modalTitle.textContent = `Internship Application — ${a.fullName}`;
+      modalBody.innerHTML = `
+        <div class="detail-row">
+          <label>Applicant Name & Email</label>
+          <p><strong>${esc(a.fullName)}</strong> &lt;${esc(a.email)}&gt; | Phone: ${esc(a.phone)}</p>
+        </div>
+        <div class="detail-row">
+          <label>College, Degree & Year</label>
+          <p>${esc(a.college)} — ${esc(a.branch || 'N/A')} (${esc(a.yearOfStudy || 'N/A')})</p>
+        </div>
+        <div class="detail-row">
+          <label>Selected Domain & Skills</label>
+          <p>Domain: <strong>${esc(a.domain)}</strong></p>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">Skills: ${esc(a.skills || 'None specified')}</p>
+        </div>
+        <div class="detail-row">
+          <label>Resume / CV</label>
+          <p>${a.resumePath ? `<a class="btn-sm" href="/api/admin/internships/${encodeURIComponent(a._id)}/resume" target="_blank" rel="noopener">View Resume${a.resumeOriginalName ? ` — ${esc(a.resumeOriginalName)}` : ''}</a>` : '<span style="color:var(--text-muted)">No resume uploaded.</span>'}</p>
+        </div>
+        <div class="detail-row">
+          <label>Applicant Note / Cover Message</label>
+          <div style="background:#f8fafc;padding:12px;border-radius:6px;border:1px solid var(--border-color);font-size:13.5px;">
+            ${esc(a.message || 'No additional message provided.')}
+          </div>
+        </div>
+        <div class="detail-row" style="margin-top:18px;">
+          <label>Update Status</label>
+          <select id="modalStatusSelect" class="filter-select" style="width:100%;">
+            <option value="Pending" ${a.status === 'Pending' ? 'selected' : ''}>Pending</option>
+            <option value="Reviewing" ${a.status === 'Reviewing' ? 'selected' : ''}>Reviewing</option>
+            <option value="Shortlisted" ${a.status === 'Shortlisted' ? 'selected' : ''}>Shortlisted</option>
+            <option value="Accepted" ${a.status === 'Accepted' ? 'selected' : ''}>Accepted</option>
+            <option value="Rejected" ${a.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+          </select>
+        </div>
+        <div class="detail-row">
+          <label>Internal Administrator Notes</label>
+          <textarea id="modalNotesText" rows="3" placeholder="Enter private evaluation notes...">${esc(a.notes || '')}</textarea>
+        </div>
+        <div style="margin-top:22px;display:flex;justify-content:flex-end;gap:10px;">
+          <button type="button" class="btn-secondary" data-modal-action="close">Cancel</button>
+          <button type="button" class="btn-success" data-modal-action="save-app" data-id="${a._id}">Save Changes</button>
+        </div>
+      `;
+      modal.style.display = 'flex';
+    };
+
+    window.saveAppStatus = async function(id) {
+      const status = document.getElementById('modalStatusSelect').value;
+      const notes = document.getElementById('modalNotesText').value;
+      try {
+        const res = await fetch(`/api/admin/internships/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ status, notes })
+        });
+        if (!res.ok) throw new Error('Failed to update status.');
+        modal.style.display = 'none';
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    window.deleteAppRecord = async function(id) {
+      if (!confirm('Are you sure you want to delete this application record?')) return;
+      try {
+        const res = await fetch(`/api/admin/internships/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+        if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.message || `Delete failed (${res.status}).`); }
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    // Modal: Contact View
+    window.viewContactModal = function(id) {
+      const c = allContacts.find(x => x._id === id);
+      if (!c) return;
+
+      modalTitle.textContent = `Contact Enquiry — ${c.name}`;
+      modalBody.innerHTML = `
+        <div class="detail-row">
+          <label>Sender Details</label>
+          <p><strong>${esc(c.name)}</strong> &lt;${esc(c.email)}&gt; | Phone: ${esc(c.phone || 'N/A')}</p>
+        </div>
+        <div class="detail-row">
+          <label>Subject</label>
+          <p><strong>${esc(c.subject || 'General Enquiry')}</strong></p>
+        </div>
+        <div class="detail-row">
+          <label>Message</label>
+          <div style="background:#f8fafc;padding:12px;border-radius:6px;border:1px solid var(--border-color);font-size:13.5px;">
+            ${esc(c.message)}
+          </div>
+        </div>
+        <div class="detail-row" style="margin-top:18px;">
+          <label>Update Status</label>
+          <select id="modalContactStatus" class="filter-select" style="width:100%;">
+            <option value="New" ${c.status === 'New' ? 'selected' : ''}>New</option>
+            <option value="Read" ${c.status === 'Read' ? 'selected' : ''}>Read</option>
+            <option value="Responded" ${c.status === 'Responded' ? 'selected' : ''}>Responded</option>
+            <option value="Closed" ${c.status === 'Closed' ? 'selected' : ''}>Closed</option>
+          </select>
+        </div>
+        <div style="margin-top:22px;display:flex;justify-content:flex-end;gap:10px;">
+          <button type="button" class="btn-secondary" data-modal-action="close">Cancel</button>
+          <button type="button" class="btn-success" data-modal-action="save-contact" data-id="${c._id}">Save Changes</button>
+        </div>
+      `;
+      modal.style.display = 'flex';
+    };
+
+    window.saveContactStatus = async function(id) {
+      const status = document.getElementById('modalContactStatus').value;
+      try {
+        const res = await fetch(`/api/admin/contacts/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error('Failed to update enquiry.');
+        modal.style.display = 'none';
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    window.deleteContactRecord = async function(id) {
+      if (!confirm('Are you sure you want to delete this contact message?')) return;
+      try {
+        const res = await fetch(`/api/admin/contacts/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+        if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.message || `Delete failed (${res.status}).`); }
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    // Modal: Enquiry View
+    window.viewEnquiryModal = function(id) {
+      const e = allEnquiries.find(x => x._id === id);
+      if (!e) return;
+
+      modalTitle.textContent = `Service Enquiry — ${e.domain}`;
+      modalBody.innerHTML = `
+        <div class="detail-row">
+          <label>Client Details</label>
+          <p><strong>${esc(e.name)}</strong> &lt;${esc(e.email)}&gt; | Phone: ${esc(e.phone || 'N/A')}</p>
+        </div>
+        <div class="detail-row">
+          <label>Domain</label>
+          <p><strong>${esc(e.domain)}</strong></p>
+        </div>
+        <div class="detail-row">
+          <label>Requirement Details</label>
+          <div style="background:#f8fafc;padding:12px;border-radius:6px;border:1px solid var(--border-color);font-size:13.5px;">
+            ${esc(e.message)}
+          </div>
+        </div>
+        <div class="detail-row" style="margin-top:18px;">
+          <label>Update Status</label>
+          <select id="modalEnquiryStatus" class="filter-select" style="width:100%;">
+            <option value="New" ${e.status === 'New' ? 'selected' : ''}>New</option>
+            <option value="Read" ${e.status === 'Read' ? 'selected' : ''}>Read</option>
+            <option value="Responded" ${e.status === 'Responded' ? 'selected' : ''}>Responded</option>
+            <option value="Closed" ${e.status === 'Closed' ? 'selected' : ''}>Closed</option>
+          </select>
+        </div>
+        <div style="margin-top:22px;display:flex;justify-content:flex-end;gap:10px;">
+          <button type="button" class="btn-secondary" data-modal-action="close">Cancel</button>
+          <button type="button" class="btn-success" data-modal-action="save-enquiry" data-id="${e._id}">Save Changes</button>
+        </div>
+      `;
+      modal.style.display = 'flex';
+    };
+
+    window.saveEnquiryStatus = async function(id) {
+      const status = document.getElementById('modalEnquiryStatus').value;
+      try {
+        const res = await fetch(`/api/admin/enquiries/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error('Failed to update enquiry.');
+        modal.style.display = 'none';
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    window.deleteEnquiryRecord = async function(id) {
+      if (!confirm('Are you sure you want to delete this domain enquiry?')) return;
+      try {
+        const res = await fetch(`/api/admin/enquiries/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+        if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.message || `Delete failed (${res.status}).`); }
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    // User State Toggle
+    window.toggleUserActive = async function(id, newState) {
+      try {
+        const res = await fetch(`/api/admin/users/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ isActive: newState })
+        });
+        const d = await res.json();
+        if (!res.ok) throw new Error(d.message || 'Failed to update user.');
+        loadAllData();
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    // Modal button delegation: avoids inline onclick handlers, which can be blocked by CSP.
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-modal-action]');
+      if (!button) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const action = button.dataset.modalAction;
+      const id = button.dataset.id;
+      if (action === 'close') {
+        modal.style.display = 'none';
+      } else if (action === 'save-app') {
+        window.saveAppStatus(id);
+      } else if (action === 'save-contact') {
+        window.saveContactStatus(id);
+      } else if (action === 'save-enquiry') {
+        window.saveEnquiryStatus(id);
+      }
+    }, true);
+
+    // Reliable event delegation for dynamically rendered action buttons.
+    // This avoids relying on inline onclick handlers after the table is re-rendered.
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-admin-action]');
+      if (!button) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const id = button.dataset.id;
+      const action = button.dataset.adminAction;
+      const actions = {
+        'view-app': () => window.viewAppModal(id),
+        'delete-app': () => window.deleteAppRecord(id),
+        'view-contact': () => window.viewContactModal(id),
+        'delete-contact': () => window.deleteContactRecord(id),
+        'view-enquiry': () => window.viewEnquiryModal(id),
+        'delete-enquiry': () => window.deleteEnquiryRecord(id)
+      };
+      if (actions[action]) actions[action]();
+    }, true);
+
+    // Refresh & Logout
+    document.getElementById('refreshBtn').onclick = loadAllData;
+    document.getElementById('logout').onclick = async () => {
+      await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+      location.href = '/login.html';
+    };
+
+    // Load everything on start
+    loadAllData();
+  </script>
+</body>
+</html>

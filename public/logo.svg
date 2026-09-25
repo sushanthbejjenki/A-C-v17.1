@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 280" width="100%" height="100%">
+  <defs>
+    <!-- Vibrant Brand Gradients matching the official emblem -->
+    <linearGradient id="acBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="acYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="acRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+
+  <!-- EMBLEM GROUP -->
+  <g id="emblem" transform="translate(10, 0)">
+    <!-- Letter 'A' Top-Right Segment (Yellow / Amber) -->
+    <polygon points="228,26 264,106 230,106 208,58" fill="url(#acYellow)"/>
+
+    <!-- Letter 'A' Left Leg & Crossbar (Cyan / Azure Blue) -->
+    <path d="M 228,26 L 152,174 L 188,174 L 205,138 L 246,138 L 252,151 L 226,151 L 216,174 L 270,174 L 262,151 L 253,126 L 228,76 Z" fill="url(#acBlue)"/>
+
+    <!-- Letter 'C' Bottom Arc (Yellow / Amber) -->
+    <path d="M 244,104 C 244,138 271,168 308,168 C 342,168 368,148 378,122 L 346,108 C 340,123 325,136 308,136 C 289,136 274,121 274,104 Z" fill="url(#acYellow)"/>
+
+    <!-- Letter 'C' Upper Arc (Cardinal Red) -->
+    <path d="M 378,82 C 368,56 342,36 308,36 C 271,36 244,66 244,104 L 274,104 C 274,85 289,68 308,68 C 325,68 340,81 346,96 Z" fill="url(#acRed)"/>
+
+    <!-- Red Ampersand '&' centered inside 'C' -->
+    <text x="309" y="119" font-family="'Montserrat', 'Inter', -apple-system, sans-serif" font-weight="900" font-size="46" fill="#dc2626" text-anchor="middle">&amp;</text>
+  </g>
+
+  <!-- Red 4-Point Star / Sparkle Accent above the 'S' -->
+  <path d="M 488,172 Q 488,185 501,185 Q 488,185 488,198 Q 488,185 475,185 Q 488,185 488,172 Z" fill="url(#acRed)"/>
+
+  <!-- TYPOGRAPHY: A & C SOLUTIONS (Official Brand Black) -->
+  <text x="270" y="214" font-family="'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="36" letter-spacing="2" fill="#000000" text-anchor="middle">A &amp; C SOLUTIONS</text>
+
+  <!-- SUBTITLE: — PVT LTD — (Official Brand Black) -->
+  <line x1="85" y1="244" x2="195" y2="244" stroke="#000000" stroke-width="3.2" stroke-linecap="round"/>
+  <text x="270" y="252" font-family="'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="22" letter-spacing="4" fill="#000000" text-anchor="middle">PVT LTD</text>
+  <line x1="345" y1="244" x2="455" y2="244" stroke="#000000" stroke-width="3.2" stroke-linecap="round"/>
+</svg>

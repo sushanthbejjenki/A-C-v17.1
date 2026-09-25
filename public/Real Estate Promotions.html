@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preload" as="image" href="/logo.webp" type="image/webp">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Real Estate Promotions | A&C Solutions Pvt. Ltd.</title>
+
+  <meta name="description"
+    content="Real estate promotion and property marketing services by A&C Solutions Pvt. Ltd.">
+
+  <!-- SAME MAIN STYLESHEET -->
+  <link rel="stylesheet" href="styles.css?v=8">
+
+  <style>
+    /* =========================================================
+       REAL ESTATE PROMOTIONS PAGE
+       ========================================================= */
+
+    .realestate-content {
+      min-height: 100vh;
+      padding: 135px 0 80px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(0, 102, 255, 0.06), transparent 35%),
+        radial-gradient(circle at 15% 80%, rgba(0, 210, 255, 0.05), transparent 35%),
+        var(--bg-light-primary);
+    }
+
+    .realestate-container {
+      width: min(1000px, 92%);
+      margin: 0 auto;
+    }
+
+    .realestate-card {
+      background: var(--bg-light-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 52px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .realestate-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 14px;
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      color: var(--accent-cyan);
+    }
+
+    .realestate-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
+    }
+
+    .realestate-title {
+      margin: 0 0 18px;
+
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+
+      color: var(--text-dark);
+    }
+
+    .realestate-intro {
+      max-width: 820px;
+
+      margin: 0 0 42px;
+
+      font-size: 18px;
+      line-height: 1.7;
+
+      color: var(--text-muted);
+    }
+
+    .realestate-divider {
+      width: 100%;
+      height: 1px;
+
+      margin: 0 0 38px;
+
+      background: var(--border-light);
+    }
+
+    .realestate-section {
+      margin-top: 38px;
+    }
+
+    .realestate-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .realestate-section h2 {
+      margin: 0 0 13px;
+
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+
+      color: var(--text-dark);
+    }
+
+    .realestate-section p {
+      margin: 0;
+
+      font-size: 16px;
+      line-height: 1.75;
+
+      color: var(--text-muted);
+    }
+
+    .realestate-learning-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 20px;
+
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+    }
+
+    .realestate-learning-list li {
+      position: relative;
+
+      padding: 14px 16px 14px 40px;
+
+      background: var(--bg-light-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+
+      font-size: 15px;
+      line-height: 1.5;
+
+      color: var(--text-dark);
+    }
+
+    .realestate-learning-list li::before {
+      content: "✓";
+
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .realestate-career-box {
+      margin-top: 38px;
+      padding: 24px;
+
+      background: rgba(0, 210, 255, 0.05);
+      border: 1px solid rgba(0, 210, 255, 0.18);
+      border-radius: var(--radius-md);
+    }
+
+    .realestate-career-box h3 {
+      margin: 0 0 8px;
+
+      font-size: 18px;
+      font-weight: 800;
+
+      color: var(--text-dark);
+    }
+
+    .realestate-career-box p {
+      margin: 0;
+
+      font-size: 15px;
+      line-height: 1.7;
+
+      color: var(--text-muted);
+    }
+
+    .realestate-back-wrap {
+      margin-top: 42px;
+      padding-top: 28px;
+
+      border-top: 1px solid var(--border-light);
+    }
+
+    .realestate-back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 12px 22px;
+
+      background: linear-gradient(
+        135deg,
+        var(--primary) 0%,
+        #0052cc 100%
+      );
+
+      color: #ffffff;
+
+      border-radius: var(--radius-pill);
+
+      font-size: 14px;
+      font-weight: 700;
+
+      box-shadow: 0 8px 22px var(--primary-glow);
+
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .realestate-back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 102, 255, 0.35);
+    }
+
+    .realestate-back-button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+
+    /* =========================================================
+       KEEP HEADER DARK ON THIS PAGE
+       ========================================================= */
+
+    .header {
+      background: rgba(3, 13, 28, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 700px) {
+
+      .realestate-content {
+        padding: 115px 0 50px;
+      }
+
+      .realestate-card {
+        padding: 30px 22px;
+        border-radius: var(--radius-md);
+      }
+
+      .realestate-intro {
+        font-size: 16px;
+      }
+
+      .realestate-section h2 {
+        font-size: 23px;
+      }
+
+      .realestate-learning-list {
+        grid-template-columns: 1fr;
+      }
+
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- =========================================================
+       SAME HEADER AS INDEX PAGE
+       ========================================================= -->
+
+  <header class="header" id="header">
+
+    <div class="container nav-wrap">
+
+      <a class="brand" href="index.html#top" aria-label="A&C Solutions Home">
+
+        <span class="brand-badge">
+
+          <img
+            src="/logo.webp"
+            alt="A&C Solutions Pvt. Ltd. Logo"
+            class="brand-logo"
+            width="1200"
+            height="632"
+            decoding="async">
+
+        </span>
+
+      </a>
+
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+
+        </svg>
+
+      </button>
+
+
+      <ul class="nav-menu" id="navMenu">
+
+        <li>
+          <a class="nav-link" href="index.html#top">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#about">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link active" href="index.html#domains">
+            Domains
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#it-tech">
+            IT &amp; Technology
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#internships">
+            Internships
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#workflow">
+            Process
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#why">
+            Why A&amp;C
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link" href="index.html#contact">
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+
+      <div class="nav-actions">
+
+        <a
+          class="nav-login-btn"
+          id="navAuthBtn"
+          href="/login">
+
+          Login →
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       REAL ESTATE PROMOTIONS CONTENT
+       ========================================================= -->
+
+  <main class="realestate-content">
+
+    <div class="realestate-container">
+
+      <article class="realestate-card">
+
+        <div class="realestate-label">
+          DOMAIN 02
+        </div>
+
+
+        <h1 class="realestate-title">
+          Real Estate Promotions
+        </h1>
+
+
+        <p class="realestate-intro">
+          Professional real estate promotion services supporting property
+          marketing, digital promotions, lead generation, and customer
+          engagement across residential and commercial property projects.
+        </p>
+
+
+        <div class="realestate-divider"></div>
+
+
+        <!-- ABOUT -->
+
+        <section class="realestate-section">
+
+          <h2>
+            About This Domain
+          </h2>
+
+          <p>
+            Real estate promotions focus on presenting properties and projects
+            effectively to potential customers through professional marketing
+            and promotional activities. This domain covers property
+            presentation, digital promotion, customer engagement, and lead
+            generation activities that support real estate businesses.
+          </p>
+
+          <p style="margin-top: 14px;">
+            Promotional activities may include creating property-focused
+            content, communicating project information, highlighting property
+            features, supporting digital campaigns, and engaging with
+            prospective customers through different marketing channels.
+          </p>
+
+        </section>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+
+        <section class="realestate-section">
+
+          <h2>
+            What You Will Learn
+          </h2>
+
+          <ul class="realestate-learning-list">
+
+            <li>
+              Real estate property promotion
+            </li>
+
+            <li>
+              Property marketing fundamentals
+            </li>
+
+            <li>
+              Digital marketing and online promotions
+            </li>
+
+            <li>
+              Property presentation and content creation
+            </li>
+
+            <li>
+              Lead generation and customer engagement
+            </li>
+
+            <li>
+              Communicating property features
+            </li>
+
+            <li>
+              Basic sales and marketing workflows
+            </li>
+
+            <li>
+              Professional customer communication
+            </li>
+
+            <li>
+              Managing property-related information
+            </li>
+
+            <li>
+              Supporting promotional campaigns
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!-- CAREER EXPOSURE -->
+
+        <section class="realestate-section">
+
+          <h2>
+            Career Exposure
+          </h2>
+
+          <p>
+            This domain can provide practical exposure to real estate
+            marketing, property promotion, digital communication, customer
+            engagement, lead management, and promotional campaign workflows.
+          </p>
+
+
+          <div class="realestate-career-box">
+
+            <h3>
+              Property Marketing &amp; Promotion
+            </h3>
+
+            <p>
+              Gain an understanding of how real estate properties are promoted,
+              how project information is presented to potential customers, and
+              how marketing and communication activities support property
+              promotion and customer engagement.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- BACK TO DOMAINS -->
+
+        <div class="realestate-back-wrap">
+
+          <a
+            href="index.html#domains"
+            class="realestate-back-button">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+
+              <line
+                x1="19"
+                y1="12"
+                x2="5"
+                y2="12">
+              </line>
+
+              <polyline
+                points="12 19 5 12 12 5">
+              </polyline>
+
+            </svg>
+
+            Back to Domains
+
+          </a>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================================
+       MOBILE NAVIGATION
+       ========================================================= -->
+
+  <script>
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    if (menuToggle && navMenu) {
+
+      menuToggle.addEventListener("click", () => {
+
+        const isOpen = navMenu.classList.toggle("open");
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          isOpen ? "true" : "false"
+        );
+
+      });
+
+
+      document.querySelectorAll(".nav-link").forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+          navMenu.classList.remove("open");
+
+          menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        });
+
+      });
+
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Portal | A&C Solutions Pvt. Ltd.</title>
+  <link rel="stylesheet" href="/admin.css">
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <style>
+    .profile-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      text-align: left;
+      margin: 28px 0;
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+    .profile-meta-item label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .profile-meta-item span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      word-break: break-word;
+    }
+    .applications-panel {
+      max-width: 700px;
+      margin: 20px auto 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .applications-panel h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-item {
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+    }
+    @media (max-width: 600px) {
+      .profile-meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .app-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand-link" href="/"><img src="/logo.webp" alt="A&C Solutions Pvt. Ltd. Logo" width="1200" height="632" decoding="async"></a>
+    <div class="header-right">
+      <a class="header-link" href="/">Company Website</a>
+      <span id="adminLinkContainer"></span>
+      <button id="logout" class="btn-outline">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="portal-card">
+      <div class="portal-avatar" id="avatarInitial">U</div>
+      <span class="eyebrow" style="color:var(--primary);font-size:11px;font-weight:800;letter-spacing:2px;">AUTHENTICATED CLIENT PORTAL</span>
+      <h1 id="welcome">Welcome</h1>
+      <p>Your A&C Solutions portal session is active. You are securely connected to the central multi-domain services platform.</p>
+      
+      <div class="profile-meta-grid" id="profileGrid">
+        <div class="profile-meta-item">
+          <label>Full Name</label>
+          <span id="uName">—</span>
+        </div>
+        <div class="profile-meta-item">
+          <label>Registered Email</label>
+          <span id="uEmail">—</span>
+        </div>
+        <div class="profile-meta-item">
+          <label>Username</label>
+          <span id="uUsername">—</span>
+        </div>
+        <div class="profile-meta-item">
+          <label>Account Role</label>
+          <span id="uRole">—</span>
+        </div>
+        <div class="profile-meta-item">
+          <label>Member Since</label>
+          <span id="uJoined">—</span>
+        </div>
+        <div class="profile-meta-item">
+          <label>Last Login</label>
+          <span id="uLastLogin">—</span>
+        </div>
+      </div>
+
+      <div class="portal-actions">
+        <a href="/#domains"><button type="button">Explore Our Domains →</button></a>
+        <a href="/#internships"><button type="button" class="btn-outline" style="background:#07192f;color:#fff;">IT & Internships</button></a>
+        <a href="/#contact"><button type="button" class="btn-outline" style="background:#edf4fa;color:var(--text-dark);border-color:#cbdceb;">Contact Support</button></a>
+      </div>
+    </div>
+
+    <!-- Application Tracker Panel -->
+    <div class="applications-panel">
+      <h3>
+        <span>My Internship Applications</span>
+        <a href="/#contact" style="font-size:12px;color:var(--primary);text-decoration:none;">+ Submit New</a>
+      </h3>
+      <div id="applicationsList">
+        <p style="color:var(--text-muted);font-size:13.5px;">Loading applications...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function initPortal() {
+      try {
+        const res = await fetch('/api/me', { credentials: 'same-origin' });
+        const data = await res.json();
+
+        if (!res.ok || !data.authenticated || !data.user) {
+          location.href = '/login.html';
+          return;
+        }
+
+        const u = data.user;
+        const displayName = u.fullName || u.name || u.username || 'User';
+
+        document.getElementById('welcome').textContent = `Welcome, ${displayName}`;
+        document.getElementById('avatarInitial').textContent = displayName.charAt(0).toUpperCase();
+        document.getElementById('uName').textContent = displayName;
+        document.getElementById('uEmail').textContent = u.email || '—';
+        document.getElementById('uUsername').textContent = u.username || '—';
+        document.getElementById('uRole').innerHTML = `<span class="badge ${u.role === 'admin' ? 'ok' : 'bad'}" style="text-transform:uppercase;">${u.role}</span>`;
+        document.getElementById('uJoined').textContent = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—';
+        document.getElementById('uLastLogin').textContent = u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'Current Session';
+
+        if (u.role === 'admin') {
+          document.getElementById('adminLinkContainer').innerHTML = `<a class="header-link" href="/admin" style="color:var(--accent-cyan);background:rgba(0,210,255,0.12);padding:6px 12px;border-radius:6px;">Admin Dashboard →</a>`;
+        }
+
+        // Fetch applications submitted by this user
+        loadMyApplications();
+      } catch (err) {
+        location.href = '/login.html';
+      }
+    }
+
+    async function loadMyApplications() {
+      const container = document.getElementById('applicationsList');
+      try {
+        const res = await fetch('/api/users/my-applications', { credentials: 'same-origin' });
+        const data = await res.json();
+
+        if (!res.ok || !data.applications || data.applications.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted);font-size:13.5px;padding:12px 0;">No internship applications submitted yet with this email.</p>';
+          return;
+        }
+
+        container.innerHTML = data.applications.map(app => {
+          let badgeClass = 'ok';
+          if (app.status === 'Rejected') badgeClass = 'bad';
+          else if (app.status === 'Pending') badgeClass = '';
+
+          return `
+            <div class="app-item">
+              <div>
+                <strong>${esc(app.domain || 'IT & Technology')}</strong>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                  College: ${esc(app.college || '—')} | Applied: ${new Date(app.createdAt).toLocaleDateString()}
+                </div>
+              </div>
+              <div>
+                <span class="badge ${badgeClass}">${esc(app.status)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch {
+        container.innerHTML = '<p style="color:var(--text-muted);font-size:13px;">Unable to load application records.</p>';
+      }
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    document.getElementById('logout').onclick = async () => {
+      await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+      location.href = '/login.html';
+    };
+
+    initPortal();
+  </script>
+</body>
+</html>

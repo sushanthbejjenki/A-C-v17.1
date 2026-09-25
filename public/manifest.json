@@ -1,0 +1,21 @@
+{
+  "name": "A&C Solutions Pvt. Ltd.",
+  "short_name": "A&C Solutions",
+  "description": "Multi-domain service company offering IT, CCTV monitoring, digital marketing, and content services.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030d1c",
+  "theme_color": "#0066ff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
